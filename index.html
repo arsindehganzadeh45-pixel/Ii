@@ -29,7 +29,6 @@ textarea{min-height:70px;font-family:monospace;font-size:0.75rem;direction:ltr;t
 .btn-o{background:transparent;border:1px solid var(--border);color:var(--text)}
 .btn-d{background:rgba(239,68,68,0.15);border:1px solid #ef4444;color:#fca5a5}
 .btn-s{background:rgba(34,197,94,0.15);border:1px solid #22c55e;color:#86efac}
-.btn-w{background:rgba(245,158,11,0.15);border:1px solid #f59e0b;color:#fcd34d}
 .btn-g{background:linear-gradient(135deg,#3b82f6,#8b5cf6);color:#fff}
 .cfg{background:rgba(3,7,18,0.8);border-radius:12px;padding:12px;margin:10px 0;border:1px solid rgba(255,255,255,0.08)}
 .cfg strong{color:var(--accent)}
@@ -45,7 +44,7 @@ textarea{min-height:70px;font-family:monospace;font-size:0.75rem;direction:ltr;t
   <header>
     <h1>🎮 پنل گیمینگ نت ملی | National Gaming Panel</h1>
     <p style="color:var(--muted);margin-top:6px;font-size:0.9rem">حجم کل پنل: ۹۹۹,۹۹۹,۹۹۹ گیگابایت</p>
-    <span class="badge">بهینه‌شده برای نت ملی و کاهش پینگ گیمینگ</span>
+    <span class="badge">دقیقاً منطبق بر فایل اصلی شما</span>
   </header>
 
   <div class="nav">
@@ -107,17 +106,15 @@ textarea{min-height:70px;font-family:monospace;font-size:0.75rem;direction:ltr;t
 (function(){
   var PANEL = {"totalGB": 999999999, "name": "National Game Panel"};
   
-  // Exact values mapped from user's input config
+  // Exact values mapped strictly from user's provided file (misi34768.conf)[span_1](start_span)[span_1](end_span)
   var SOURCE_PRIVATE_KEY = "aEdpAUdPV2EcdP2iA8jehI/uzHBCnwG3pBXSOI8+JkY=";
   var SOURCE_ADDRESS = "10.192.188.108/32";
   var SOURCE_DNS = "208.67.220.200, 208.67.222.222";
   var SOURCE_MTU = 1280;
   var SERVER_PUBLIC_KEY = "rm5T2SC8k03Q3vLdoRsmsdS3u3wkEqCvdL6+O7oT9B8=";
   var ENDPOINT = "185.208.10.1:51820";
-  var ALLOWED_IPS = "0.0.0.0/0, ::/0";
-  var PERSISTENT_KEEPALIVE = 25;
 
-  var STORAGE_KEY = "national_game_panel_store";
+  var STORAGE_KEY = "national_game_panel_store_exact";
   var CONFIGS = [];
   var CONSUMED = 0;
   var LAST_SUB_URL = "";
@@ -187,11 +184,8 @@ textarea{min-height:70px;font-family:monospace;font-size:0.75rem;direction:ltr;t
 
   function buildConf(name, days, gb) {
     var safe = String(name).replace(/[^\x20-\x7E]/g,"_").slice(0,40);
+    // Exact format matching user's original .conf file structure[span_2](start_span)[span_2](end_span)
     var conf = [
-      "# National Network Gaming WireGuard",
-      "# Name: " + safe,
-      "# Volume: " + gb + "GB | Duration: " + days + " Days",
-      "",
       "[Interface]",
       "PrivateKey = " + SOURCE_PRIVATE_KEY,
       "Address = " + SOURCE_ADDRESS,
@@ -200,9 +194,7 @@ textarea{min-height:70px;font-family:monospace;font-size:0.75rem;direction:ltr;t
       "",
       "[Peer]",
       "PublicKey = " + SERVER_PUBLIC_KEY,
-      "AllowedIPs = " + ALLOWED_IPS,
       "Endpoint = " + ENDPOINT,
-      "PersistentKeepalive = " + PERSISTENT_KEEPALIVE,
       ""
     ].join("\n");
     return { conf: conf };
@@ -440,7 +432,7 @@ textarea{min-height:70px;font-family:monospace;font-size:0.75rem;direction:ltr;t
 
   load();
   renderAll();
-  toast("پنل گیمینگ نت ملی آماده است (حجم: ۹۹۹ میلیون گیگ)");
+  toast("پنل نت ملی دقیقاً مطابق فایل اصلی آماده شد");
 })();
 </script>
 </body>
